@@ -1,0 +1,94 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align:center;">
+    <h1>FORMULARIO LIBROS</h1>
+</div>
+@using (Html.BeginForm("Form", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+
+        <div class="col-md-12" style="display: none;">
+            @Html.TextBoxFor(model => model.IdLibro, new { @class = "hidden form-control", autocomplete = "off" })
+        </div>
+
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Titulo, "Titulo:")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control",autocomplete = "off" })
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.AnioPublicacion, "Año de Publicacion:")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.AnioPublicacion, new { @class = "form-control",autocomplete = "off" })
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Editorial, "Editorial:")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.Editorial, new { @class = "form-control",autocomplete = "off" })
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.FechaPublicacion, "Fecha de Publicacion: ")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.FechaPublicacion, new { @class = "form-control", @id="txtFechaPublicacion" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Autor)
+                @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "NombreCompleto"), "Seleccione un Autor", new { @class = "form-control", @id = "ddlAutor" })
+            </div>
+        </div>
+
+
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+
+        <div class="glyphicon-up">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Libro", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            $("#txtFechaPublicacion").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+    </script>
+    }

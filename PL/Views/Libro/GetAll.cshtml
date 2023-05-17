@@ -1,0 +1,116 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>LIBROS REGISTRADOS</h1>
+
+@using (Html.BeginForm("GetAll", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Titulo, "Titulo:")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Autor.Nombre, "Autor:")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.FechaPublicacion, "Fecha de Publicacion: ")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.FechaPublicacion, new { @class = "form-control", @id="txtFechaPublicacion" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Editorial, "Editorial: ")
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                @Html.TextBoxFor(model => model.Editorial, new { @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="glyphicon-up">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="submit" value="Buscar Libro" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div style="float:right;">
+    @Html.ActionLink("Agregar", "Form", "Libro", htmlAttributes: new { @class = "btn btn-success" })
+</div>
+
+<br />
+<br />
+
+<table class="table table-light  table-bordered table-responsive table-hover" id="table_usuarios">
+    <thead>
+        <tr class="table-secondary">
+            <td>Editar</td>
+            <td style="display :none;">id</td>
+            <td style="text-align:center;">Titulo Libro</td>
+            <td style="text-align:center;">Año de Publicacion</td>
+            <td style="text-align:center;">Editorial</td>
+            <td style="text-align:center;">Fecha de Publicacion</td>
+            <td style="text-align:center;">Autor</td>
+            <td>Eliminar</td>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ML.Libro libro in Model.Libros)
+        {
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"><a class="btn btn-warning glyphicon  glyphicon glyphicon-cog" href="@Url.Action("Form", "Libro", new { IdLibro = libro.IdLibro})"><i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
+                <td style="display :none;">@libro.IdLibro </td>
+                <td style="text-align:center;">@libro.Titulo</td>
+                <td style="text-align:center;">@libro.AnioPublicacion</td>
+                <td style="text-align:center;">@libro.Editorial</td>
+                <td style="text-align:center;">@libro.FechaPublicacion</td>
+                <td style="text-align:center;">@libro.Autor.NombreCompleto</td>
+                <td style="text-align: center; vertical-align: middle;"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Libro", new { Editorial = libro.Editorial})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: mintcream"></i></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            $("#txtFechaPublicacion").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+    </script>
+    }
+
+
